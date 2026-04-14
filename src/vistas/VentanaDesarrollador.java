@@ -2,17 +2,18 @@ package vistas;
 
 import java.awt.EventQueue;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class VeentanaDesarrollador extends JFrame {
+public class VentanaDesarrollador extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	
-	public VeentanaDesarrollador() {
+	public VentanaDesarrollador() {
 		setTitle("Aplicación para IMC");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 663, 466);
