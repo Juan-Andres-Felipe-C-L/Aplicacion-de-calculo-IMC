@@ -16,9 +16,25 @@ public class Procesos {
 		return false;
 	}
 	
-	//VALIDAR TEXTO
+	public double calcularIMC(double peso, double estatura) {
+		double resultado;
+		resultado = ((Math.pow(estatura, 2))/peso );
+		return resultado;		
+	}
 	
-	//PORCESO IMC
+	public String clasificar(double imc) {
+		String clasificacion = "";
+		if(imc>0 && imc<18.5) {
+			clasificacion = "Peso bajo.";
+		}else if(imc>=18.5 && imc<=24.9) {
+			clasificacion = "Peso normal.";
+		}else if(imc>=25 && imc<=29.9) {
+			clasificacion = "Sobrepeso.";
+		}else if(imc>=30) {
+			clasificacion = "Obesidad.";
+		}
+		return clasificacion;
+	}
 	
-	//CLASIFICACIÓN
+	
 }
