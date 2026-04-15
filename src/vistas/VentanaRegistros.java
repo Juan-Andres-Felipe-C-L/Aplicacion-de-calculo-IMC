@@ -99,20 +99,18 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 		btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.setBounds(363, 346, 89, 23);
 		contentPane.add(btnLimpiar);
-		btnLimpiar.addActionListener(this);
-		
-		listar();
-		
+		btnLimpiar.addActionListener(this);		
 	}
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnBuscar) {
-			//buscarID
+			buscarPorID();
 		} else if(e.getSource() == btnAtras) {
 			coordinador.mostrarVentanaCalculo();
 		} else if(e.getSource() == btnEliminar) {
-			//Eliminar
+			eliminar();
+			mostrarLista();
 		} else if(e.getSource() == btnLimpiar) {
 			limpiarCampos();
 		}
@@ -120,8 +118,12 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 	}
 	
 	private void limpiarCampos() { 
-		txtAreaRegistros.setText("");
+		mostrarLista();
 		textField.setText("");
+	}
+	
+	public void mostrarLista() {
+		listar();
 	}
 	
 	private void listar() {
@@ -132,5 +134,30 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 	    } else {
 	        txtAreaRegistros.setText(listaPersonas.toString());
 	    }
+	}
+	
+	private void eliminar() {
+		String id = textField.getText();
+		int validacion = coordinador.eliminarPersona(id);
+		if(validacion == 0) {
+			JOptionPane.showMessageDialog(null, "No hay registros aún.");
+			limpiarCampos(); 
+		} else if(validacion == 1) {
+			JOptionPane.showMessageDialog(null, "La persona ha sido eliminada exitosamente.");
+			limpiarCampos(); 
+		} else if(validacion == 2) {
+			JOptionPane.showMessageDialog(null, "No se encontró una persona con I.D. escrito.");
+			limpiarCampos(); 
+		}
+	}
+	
+	private void buscarPorID() {
+		String id = textField.getText();
+		PersonaDTO persona = coordinador.consultarUsuarioDocumento(id);
+		if(persona == null) {
+			JOptionPane.showMessageDialog(null, "No se encontró una persona con I.D. escrito.");
+		} else {
+			txtAreaRegistros.setText(persona.toString());
+		}
 	}
 }

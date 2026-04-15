@@ -61,7 +61,7 @@ public class PersonaDAO {
 			return 0;
 		} else {
 		    for (int i = 0; i < listaPersonas.size(); i++) {
-		        if (listaPersonas.get(i).getId() == id) {
+		        if (listaPersonas.get(i).getId().equals(id)) {
 		            listaPersonas.remove(i);
 		            return 1;
 		        }

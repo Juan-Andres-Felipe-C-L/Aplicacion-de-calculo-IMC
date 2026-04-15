@@ -41,6 +41,7 @@ public class Coordinador {
 	}
 	
 	public void mostrarVentanaRegistros() {
+		ventanaRegistros.mostrarLista();
 		ventanaRegistros.setVisible(true);
 	}
 	
