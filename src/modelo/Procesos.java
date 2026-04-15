@@ -1,6 +1,15 @@
 package modelo;
 
+import javax.swing.JTextField;
+
+import controlador.Coordinador;
+
 public class Procesos {
+	private Coordinador coordinador;
+	
+	public void setCoordinador(Coordinador coordinador) {
+		this.coordinador = coordinador;
+	}
 	
 	public boolean validarEdad(int edad) {
 		if(edad>0 && edad<=120) {
@@ -18,7 +27,7 @@ public class Procesos {
 	
 	public double calcularIMC(double peso, double estatura) {
 		double resultado;
-		resultado = ((Math.pow(estatura, 2))/peso );
+		resultado = (peso/(Math.pow(estatura, 2)));
 		return resultado;		
 	}
 	
@@ -34,7 +43,15 @@ public class Procesos {
 			clasificacion = "Obesidad.";
 		}
 		return clasificacion;
+	}	
+
+	public boolean esTextoValido(JTextField campo) {
+	    String texto = campo.getText().trim(); // Captura el texto
+	    // Validar que no esté vacío y que solo tenga letras (y espacios)
+	    if (texto.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
-	
-	
 }

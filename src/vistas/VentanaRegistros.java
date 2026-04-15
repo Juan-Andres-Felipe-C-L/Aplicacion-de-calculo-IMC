@@ -5,16 +5,21 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Coordinador;
+import modelo.PersonaDTO;
 
 public class VentanaRegistros extends JDialog implements ActionListener {
 
@@ -28,9 +33,12 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 	private JLabel lblBuscar;
 	private JButton btnBuscar;
 	private JButton btnEliminar;
+	private JButton btnLimpiar;
+	private Coordinador coordinador;
 
 
-	public VentanaRegistros() {
+	public VentanaRegistros(VentanaCalculo ventanaPrincipal, boolean modal) {
+		super(ventanaPrincipal, modal);
 		setTitle("Aplicación para IMC");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 663, 466);
@@ -41,6 +49,11 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 		setContentPane(contentPane);
 				
 		iniciarComponentes();
+		
+	}
+	
+	public void setCoordinador(Coordinador coordinador) {
+	    this.coordinador = coordinador;
 	}
 	
 	private void iniciarComponentes() {		
@@ -73,25 +86,51 @@ public class VentanaRegistros extends JDialog implements ActionListener {
 		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setForeground(new Color(0, 64, 128));
-		btnBuscar.setBounds(196, 346, 89, 23);
+		btnBuscar.setBounds(167, 346, 89, 23);
 		contentPane.add(btnBuscar);
+		btnBuscar.addActionListener(this);
 		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setForeground(new Color(255, 0, 0));
-		btnEliminar.setBounds(321, 346, 89, 23);
+		btnEliminar.setBounds(266, 346, 89, 23);
 		contentPane.add(btnEliminar);
-		btnBuscar.addActionListener(this);
+		btnEliminar.addActionListener(this);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setBounds(363, 346, 89, 23);
+		contentPane.add(btnLimpiar);
+		btnLimpiar.addActionListener(this);
+		
+		listar();
+		
 	}
-	
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnBuscar) {
-			//buscarCompra();
+			//buscarID
 		} else if(e.getSource() == btnAtras) {
-			//atras();
+			coordinador.mostrarVentanaCalculo();
 		} else if(e.getSource() == btnEliminar) {
 			//Eliminar
+		} else if(e.getSource() == btnLimpiar) {
+			limpiarCampos();
 		}
 		
+	}
+	
+	private void limpiarCampos() { 
+		txtAreaRegistros.setText("");
+		textField.setText("");
+	}
+	
+	private void listar() {
+	    ArrayList<PersonaDTO> listaPersonas = coordinador.consultarPersonasLista();
+	    
+	    if (listaPersonas == null || listaPersonas.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Aún no hay registros en el sistema.");
+	    } else {
+	        txtAreaRegistros.setText(listaPersonas.toString());
+	    }
 	}
 }

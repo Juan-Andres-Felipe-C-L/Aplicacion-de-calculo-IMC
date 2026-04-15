@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import controlador.Coordinador;
+
 public class PersonaDAO {
+	private Coordinador coordinador;
+	
+	public void setCoordinador(Coordinador coordinador) {
+		this.coordinador = coordinador;
+	}
 		
 	ArrayList<PersonaDTO> listaPersonas; 
 	
@@ -13,74 +20,53 @@ public class PersonaDAO {
 	}
 
 	public boolean registrarPersona(PersonaDTO persona) {
-		boolean variable = true;
-		for(PersonaDTO u : listaPersonas) {
-			if(u.getId() == persona.getId()) {
-				variable = true;
-			} else {
-				listaPersonas.add(persona);
-				variable = false;
-			}			
-		}
-		return variable;
+	    for (PersonaDTO u : listaPersonas) {
+	        if (u.getId().equals(persona.getId())) {
+	            return false;
+	        }
+	    }
+	    listaPersonas.add(persona);
+	    return true;
 	}
 				
 	public PersonaDTO consultarUsuarioDocumento(String id) {
-		PersonaDTO persona = null;
-		if(listaPersonas.size() == 0) {
-			JOptionPane.showMessageDialog(null, "No hay datos registrados aún.");
-		} else {
-			for(PersonaDTO p : listaPersonas) {
-				if(p.getId() == id) {
-					persona = p;
-					System.out.println("\nRESULTADOS DE LA BÚSQUEDA:");
-					System.out.println(persona);
-				} else {
-					System.out.println("\nLA PERSONA NO ESTÁ REGISTRADA.");
-				}		
-			}
-		}
-		return persona;
+	    for (PersonaDTO p : listaPersonas) {
+	        if (p.getId() != null && p.getId().equals(id)) {
+	            return p;
+	        }
+	    }
+	    return null;
 	}
 	
 	public ArrayList<PersonaDTO> consultarPersonasLista() {
-		if(listaPersonas.size() == 0) {
-			JOptionPane.showMessageDialog(null, "No hay datos registrados aún.");
-			return null;
-		} else {
-			System.out.println("\n <<<<<< LISTA DE OPERARIOS >>>>>>");
-			System.out.println(listaPersonas);
-			return listaPersonas;
-		}
+		return listaPersonas;
 	}
 	
-	public boolean actualizarPersona(PersonaDTO persona) {
+	public int actualizarPersona(PersonaDTO persona) {
 		if(listaPersonas.size() == 0) {
-			JOptionPane.showMessageDialog(null, "No hay datos registrados aún.");
-			return false;
+			return 0;
 		} else {
 		    for (int i = 0; i < listaPersonas.size(); i++) {
-		        if (listaPersonas.get(i).getId() == persona.getId()) {
+		        if (listaPersonas.get(i).getId().equals(persona.getId())) {
 		            listaPersonas.set(i, persona);
-		            return true;
+		            return 1;
 		        }
 		    }
 		}
-	    return false;
+	    return 2;
 	}
 	
-	public boolean eliminarPersona(String id) {
+	public int eliminarPersona(String id) {
 		if(listaPersonas.size() == 0) {
-			JOptionPane.showMessageDialog(null, "No hay datos registrados aún.");
-			return false;
+			return 0;
 		} else {
 		    for (int i = 0; i < listaPersonas.size(); i++) {
 		        if (listaPersonas.get(i).getId() == id) {
 		            listaPersonas.remove(i);
-		            return true;
+		            return 1;
 		        }
 		    }
 		}
-	    return false;
+	    return 2;
 	}
 }
